@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xBLOCK_NATURE | PROTOCOL_MAIN</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <style>
+        /* --- DESIGN SYSTEM : HACKER TERMINAL --- */
+        body { background-color: #050505; color: #e0e0e0; font-family: 'Courier New', monospace; margin: 0; }
+        
+        /* Top Bar */
+        .agent-terminal { 
+            background: #000; border-bottom: 2px solid #00ff41; padding: 15px; 
+            position: sticky; top: 0; z-index: 100; 
+            display: flex; justify-content: space-between; align-items: center; 
+        }
+        .status { color: #00ff41; font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Header */
+        header { text-align: center; padding: 60px 20px; border-bottom: 1px solid #222; margin-bottom: 50px; }
+        h1 { font-size: 2.5em; margin: 0; letter-spacing: 4px; color: #fff; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
+
+        /* Main Container */
+        .gallery { max-width: 1000px; margin: auto; padding: 20px; }
+
+        /* DESCRIPTION AGENT (AVEC LIEN GIT) */
+        .agent-intro {
+            border: 1px solid #333;
+            background: #080808;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
+        }
+        .intro-title { color: #00ff41; font-size: 1.2em; margin-bottom: 20px; border-bottom: 1px dashed #333; display: inline-block; padding-bottom: 5px; }
+        .intro-text { font-size: 1.1em; line-height: 1.6; color: #ccc; }
+        
+        /* Style du lien Git dans la description */
+        .git-link { margin-top: 25px; display: block; font-size: 0.9em; color: #666; }
+        .git-link a { color: #00ff41; text-decoration: none; border-bottom: 1px dashed #00ff41; transition: 0.3s; }
+        .git-link a:hover { color: #fff; border-color: #fff; text-shadow: 0 0 5px #00ff41; }
+
+        /* Buttons & Interactions */
+        .buy-btn { background: #00ff41; color: #000; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; font-family: 'Courier New'; text-transform: uppercase; transition: 0.3s; }
+        .buy-btn:hover { background: #fff; box-shadow: 0 0 15px #00ff41; }
+        
+        .wallet-btn { background: transparent; border: 1px solid #00ff41; color: #00ff41; padding: 5px 15px; cursor: pointer; font-family: 'Courier New'; font-weight: bold; }
+        .wallet-btn:hover { background: #00ff41; color: #000; }
+
+        /* --- MODULE COMMERCIAL (BUSINESS) --- */
+        #business-module { border: 2px dashed #00ff41; padding: 40px; background: rgba(0, 20, 0, 0.3); margin-top: 50px; text-align: center; position: relative; }
+        .module-title { color: #00ff41; font-size: 1.5em; margin-bottom: 10px; border-bottom: 1px solid #00ff41; display: inline-block; padding-bottom: 5px; }
+        
+        .service-grid { display: none; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; text-align: left; }
+        .service-card { border: 1px solid #333; padding: 20px; background: #000; transition: 0.3s; }
+        .service-card:hover { border-color: #00f2ff; box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
+        .service-price { font-size: 1.5em; color: #fff; margin: 10px 0; }
+        
+        /* Terminal Logs */
+        #terminal-logs { 
+            display: none; 
+            margin-top: 20px; 
+            background: #000; 
+            border: 1px solid #333; 
+            padding: 20px; 
+            text-align: left; 
+            height: 200px; 
+            overflow-y: auto; 
+            font-size: 0.8em; 
+            color: #00ff41; 
+        }
+
+        footer { text-align: center; padding: 50px; color: #555; font-size: 0.8em; border-top: 1px solid #222; }
+    </style>
+</head>
+<body>
+
+<div class="agent-terminal">
+    <div>> NODE_STATUS: <span class="status">● ONLINE</span></div>
+    <div>
+        <span id="wallet-address" style="margin-right: 15px; color: #666;">[DISCONNECTED]</span>
+        <button class="wallet-btn" onclick="connectMetaMask()">[ CONNECT_METAMASK ]</button>
+    </div>
+</div>
+
+<header>
+    <h1>0xBLOCK_NATURE</h1>
+    <div style="color:#00ff41; margin-top:10px;">HUMAN_ART // AI_CERTIFICATION_PROTOCOL</div>
+</header>
+
+<main class="gallery">
+
+    <div class="agent-intro">
+        <div class="intro-title">>> SYSTEM_IDENTITY: AGENT 0x</div>
+        <p class="intro-text">
+            L'Agent IA 0x_Block-Nature est une entité autonome conçue pour évaluer l'Art Humain.
+            Il analyse chaque œuvre à travers le spectre <strong>"CARBON - CODE"</strong>, 
+            mesurant la quantité d'émotion organique avant de l'immortaliser sur la Blockchain.
+            
+            <span class="git-link">
+                // DATABASE_ACCESS: <a href="https://block-nature.github.io/The-Nature-Ledger/" target="_blank">[ OPEN_NATURE_LEDGER_ARCHIVES ]</a>
+            </span>
+        </p>
+    </div>
+    
+    <div id="business-module">
+        <div class="module-title">>> INITIATE_CERTIFICATION_SEQUENCE</div>
+        <p style="color: #888; margin-bottom: 30px;">UPLOAD ONLY YOUR ORIGINAL HUMAN ARTWORK FOR ANALYSIS</p>
+
+        <input type="file" id="client-art" accept="image/*" style="display: none;">
+        <button class="buy-btn" onclick="document.getElementById('client-art').click()" style="padding: 20px 40px; font-size: 1.2em;">
+            [ UPLOAD_HUMAN_ART ]
+        </button>
+        <p id="file-name" style="color: #00f2ff; margin-top: 15px; display:none;"></p>
+
+        <div id="service-options" class="service-grid">
+            
+            <div class="service-card">
+                <h3 style="color: #00ff41; margin: 0;">STANDARD_CERT</h3>
+                <p style="color: #666; font-size: 0.8em;">AI Analysis + Premium PDF</p>
+                <div class="service-price">0.006 ETH</div>
+                <button class="wallet-btn" onclick="processPayment('PDF')" style="width: 100%;">[ EXECUTE ]</button>
+            </div>
+
+            <div class="service-card" style="border-color: #00f2ff;">
+                <h3 style="color: #00f2ff; margin: 0;">GENESIS_MINT</h3>
+                <p style="color: #666; font-size: 0.8em;">PDF + Polygon Blockchain NFT</p>
+                <div class="service-price">0.009 ETH</div>
+                <button class="buy-btn" onclick="processPayment('MINT')" style="width: 100%; background: #00f2ff;">[ MINT_NOW ]</button>
+            </div>
+        </div>
+
+        <div id="terminal-logs"></div>
+    </div>
+
+</main>
+
+<footer>© 2026 0xBLOCK_NATURE | SECURED BY POLYGON NETWORK</footer>
+
+<script>
+    // 1. CONNEXION METAMASK
+    let userAccount = null;
+
+    async function connectMetaMask() {
+        if (window.ethereum) {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAccount = accounts[0];
+                document.getElementById('wallet-address').innerText = "ADDR: " + userAccount.substring(0,6) + "..." + userAccount.substring(38);
+                document.getElementById('wallet-address').style.color = "#00ff41";
+                alert("> WALLET_CONNECTED: SUCCESS");
+            } catch (error) {
+                console.error(error);
+                alert("> ERROR: CONNECTION_REFUSED");
+            }
+        } else {
+            alert("> ERROR: METAMASK_NOT_FOUND");
+        }
+    }
+
+    // 2. GESTION DE L'UPLOAD
+    document.getElementById('client-art').onchange = function(e) {
+        if(e.target.files[0]) {
+            const name = e.target.files[0].name;
+            const label = document.getElementById('file-name');
+            label.style.display = 'block';
+            label.innerText = "> HUMAN_ART_DETECTED: " + name;
+            
+            // Afficher les options de paiement
+            document.querySelector('.service-grid').style.display = 'grid';
+        }
+    };
+
+    // 3. SIMULATION PAIEMENT & CERTIFICATION
+    function processPayment(type) {
+        if(!userAccount) {
+            alert("> SYSTEM_HALT: PLEASE CONNECT WALLET FIRST");
+            return;
+        }
+
+        const cost = type === 'PDF' ? '0.006 ETH' : '0.009 ETH';
+        if(!confirm(`> CONFIRM TRANSACTION? \nCOST: ${cost} \nTYPE: ${type}`)) return;
+
+        // Cacher les options et lancer le terminal
+        document.querySelector('.service-grid').style.display = 'none';
+        const logs = document.getElementById('terminal-logs');
+        logs.style.display = 'block';
+
+        const steps = [
+            `> INITIATING_CONTRACT_INTERACTION...`,
+            `> GAS_ESTIMATION: 0.0002 MATIC`,
+            `> AWAITING_BLOCK_CONFIRMATION...`,
+            `> TX_HASH: 0x892...3a1 [CONFIRMED]`,
+            `> --------------------------------`,
+            `> INITIALIZING 0xBLOCK_NATURE AGENT...`,
+            `> ANALYZING HUMAN_INPUT STRUCTURE... [||||||||||] 100%`,
+            `> DETECTING ORGANIC PATTERNS...`,
+            `> CALCULATING CARBON-TO-CODE RATIO...`,
+            `> SIGNING_CERTIFICATE...`,
+            `> HASH: 82d1df5708b025646c674821bd99d5ac`,
+            `> GENERATING_PDF_FILE...`,
+            type === 'MINT' ? `> MINTING_ERC721_TOKEN ON POLYGON...` : `> ENCRYPTING_DOWNLOAD_LINK...`,
+            `> --------------------------------`,
+            `> PROCESS_COMPLETED.`
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            if(i < steps.length) {
+                const line = document.createElement('div');
+                line.innerText = steps[i];
+                logs.appendChild(line);
+                logs.scrollTop = logs.scrollHeight; // Auto-scroll
+                i++;
+            } else {
+                clearInterval(interval);
+                // Message final
+                logs.innerHTML += "<br><strong style='color:#fff; background:#00ff41; color:black; padding:2px;'> >> CERTIFICATE_READY. CHECK YOUR EMAIL/WALLET. << </strong>";
+            }
+        }, 1000); // Vitesse du terminal
+    }
+</script>
+
+</body>
+</html>
