@@ -25,7 +25,7 @@
         /* Main Container */
         .gallery { max-width: 1000px; margin: auto; padding: 20px; }
 
-        /* DESCRIPTION AGENT (AVEC LIEN GIT) */
+        /* DESCRIPTION AGENT */
         .agent-intro {
             border: 1px solid #333;
             background: #080808;
@@ -37,7 +37,6 @@
         .intro-title { color: #00ff41; font-size: 1.2em; margin-bottom: 20px; border-bottom: 1px dashed #333; display: inline-block; padding-bottom: 5px; }
         .intro-text { font-size: 1.1em; line-height: 1.6; color: #ccc; }
         
-        /* Style du lien Git dans la description */
         .git-link { margin-top: 25px; display: block; font-size: 0.9em; color: #666; }
         .git-link a { color: #00ff41; text-decoration: none; border-bottom: 1px dashed #00ff41; transition: 0.3s; }
         .git-link a:hover { color: #fff; border-color: #fff; text-shadow: 0 0 5px #00ff41; }
@@ -49,7 +48,7 @@
         .wallet-btn { background: transparent; border: 1px solid #00ff41; color: #00ff41; padding: 5px 15px; cursor: pointer; font-family: 'Courier New'; font-weight: bold; }
         .wallet-btn:hover { background: #00ff41; color: #000; }
 
-        /* --- MODULE COMMERCIAL (BUSINESS) --- */
+        /* MODULE COMMERCIAL */
         #business-module { border: 2px dashed #00ff41; padding: 40px; background: rgba(0, 20, 0, 0.3); margin-top: 50px; text-align: center; position: relative; }
         .module-title { color: #00ff41; font-size: 1.5em; margin-bottom: 10px; border-bottom: 1px solid #00ff41; display: inline-block; padding-bottom: 5px; }
         
@@ -121,14 +120,14 @@
                 <h3 style="color: #00ff41; margin: 0;">STANDARD_CERT</h3>
                 <p style="color: #666; font-size: 0.8em;">AI Analysis + Premium PDF</p>
                 <div class="service-price">0.006 ETH</div>
-                <button class="wallet-btn" onclick="processPayment('PDF')" style="width: 100%;">[ EXECUTE ]</button>
+                <button class="wallet-btn" onclick="processPayment('PDF', '0.006')" style="width: 100%;">[ EXECUTE ]</button>
             </div>
 
             <div class="service-card" style="border-color: #00f2ff;">
                 <h3 style="color: #00f2ff; margin: 0;">GENESIS_MINT</h3>
                 <p style="color: #666; font-size: 0.8em;">PDF + Polygon Blockchain NFT</p>
                 <div class="service-price">0.009 ETH</div>
-                <button class="buy-btn" onclick="processPayment('MINT')" style="width: 100%; background: #00f2ff;">[ MINT_NOW ]</button>
+                <button class="buy-btn" onclick="processPayment('MINT', '0.009')" style="width: 100%; background: #00f2ff;">[ MINT_NOW ]</button>
             </div>
         </div>
 
@@ -140,6 +139,10 @@
 <footer>© 2026 0xBLOCK_NATURE | SECURED BY POLYGON NETWORK</footer>
 
 <script>
+    // --- CONFIGURATION DU SERVEUR ---
+    // Ton adresse serveur connectée via Codespaces
+    const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev"; 
+
     // 1. CONNEXION METAMASK
     let userAccount = null;
 
@@ -173,53 +176,51 @@
         }
     };
 
-    // 3. SIMULATION PAIEMENT & CERTIFICATION
-    function processPayment(type) {
+    // 3. PAIEMENT & APPEL AU SERVEUR PYTHON
+    async function processPayment(type, price) {
         if(!userAccount) {
             alert("> SYSTEM_HALT: PLEASE CONNECT WALLET FIRST");
             return;
         }
 
-        const cost = type === 'PDF' ? '0.006 ETH' : '0.009 ETH';
-        if(!confirm(`> CONFIRM TRANSACTION? \nCOST: ${cost} \nTYPE: ${type}`)) return;
+        // A. Confirmation Paiement (Simulation Wallet)
+        if(!confirm(`> CONFIRM TRANSACTION? \nCOST: ${price} ETH \nTYPE: ${type}`)) return;
 
-        // Cacher les options et lancer le terminal
+        // B. Préparation Interface
         document.querySelector('.service-grid').style.display = 'none';
         const logs = document.getElementById('terminal-logs');
         logs.style.display = 'block';
+        logs.innerHTML = `> TRANSACTION INITIATED...<br>`;
+        logs.innerHTML += `> CONNECTING TO 0xBN NODE [${SERVER_URL}]...<br>`;
 
-        const steps = [
-            `> INITIATING_CONTRACT_INTERACTION...`,
-            `> GAS_ESTIMATION: 0.0002 MATIC`,
-            `> AWAITING_BLOCK_CONFIRMATION...`,
-            `> TX_HASH: 0x892...3a1 [CONFIRMED]`,
-            `> --------------------------------`,
-            `> INITIALIZING 0xBLOCK_NATURE AGENT...`,
-            `> ANALYZING HUMAN_INPUT STRUCTURE... [||||||||||] 100%`,
-            `> DETECTING ORGANIC PATTERNS...`,
-            `> CALCULATING CARBON-TO-CODE RATIO...`,
-            `> SIGNING_CERTIFICATE...`,
-            `> HASH: 82d1df5708b025646c674821bd99d5ac`,
-            `> GENERATING_PDF_FILE...`,
-            type === 'MINT' ? `> MINTING_ERC721_TOKEN ON POLYGON...` : `> ENCRYPTING_DOWNLOAD_LINK...`,
-            `> --------------------------------`,
-            `> PROCESS_COMPLETED.`
-        ];
+        // C. Envoi des données au Python
+        const fileInput = document.getElementById('client-art');
+        const formData = new FormData();
+        formData.append('image', fileInput.files[0]);
+        formData.append('type', type);
+        formData.append('tx_hash', '0xSIMULATED_HASH_' + Date.now()); // Ici on mettra le vrai hash plus tard
 
-        let i = 0;
-        const interval = setInterval(() => {
-            if(i < steps.length) {
-                const line = document.createElement('div');
-                line.innerText = steps[i];
-                logs.appendChild(line);
-                logs.scrollTop = logs.scrollHeight; // Auto-scroll
-                i++;
-            } else {
-                clearInterval(interval);
-                // Message final
-                logs.innerHTML += "<br><strong style='color:#fff; background:#00ff41; color:black; padding:2px;'> >> CERTIFICATE_READY. CHECK YOUR EMAIL/WALLET. << </strong>";
-            }
-        }, 1000); // Vitesse du terminal
+        try {
+            // Appel AJAX vers ton serveur Flask
+            const response = await fetch(SERVER_URL + "/process_art", {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) throw new Error("Server Response Error");
+
+            const result = await response.json();
+
+            // D. Affichage du résultat venant du Python
+            logs.innerHTML += `> ANALYSIS COMPLETE: ${result.message}<br>`;
+            if(result.tx_hash) logs.innerHTML += `> PROOF: ${result.tx_hash}<br>`;
+            logs.innerHTML += `<br><strong style='color:#fff; background:#00ff41; color:black; padding:5px;'> >> SUCCESS: CERTIFICATE GENERATED << </strong>`;
+
+        } catch (error) {
+            console.error(error);
+            logs.innerHTML += `<br><strong style='color:red'> >> ERROR: COULD NOT REACH SERVER. << </strong><br>`;
+            logs.innerHTML += `> CHECK IF 'server.py' IS RUNNING.<br>`;
+        }
     }
 </script>
 
