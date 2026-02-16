@@ -9,7 +9,6 @@
         /* --- DESIGN SYSTEM : HACKER TERMINAL --- */
         body { background-color: #050505; color: #e0e0e0; font-family: 'Courier New', monospace; margin: 0; }
         
-        /* Top Bar */
         .agent-terminal { 
             background: #000; border-bottom: 2px solid #00ff41; padding: 15px; 
             position: sticky; top: 0; z-index: 100; 
@@ -18,14 +17,11 @@
         .status { color: #00ff41; font-weight: bold; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Header */
         header { text-align: center; padding: 60px 20px; border-bottom: 1px solid #222; margin-bottom: 50px; }
         h1 { font-size: 2.5em; margin: 0; letter-spacing: 4px; color: #fff; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
 
-        /* Main Container */
         .gallery { max-width: 1000px; margin: auto; padding: 20px; }
 
-        /* DESCRIPTION AGENT */
         .agent-intro {
             border: 1px solid #333;
             background: #080808;
@@ -41,14 +37,12 @@
         .git-link a { color: #00ff41; text-decoration: none; border-bottom: 1px dashed #00ff41; transition: 0.3s; }
         .git-link a:hover { color: #fff; border-color: #fff; text-shadow: 0 0 5px #00ff41; }
 
-        /* Buttons & Interactions */
         .buy-btn { background: #00ff41; color: #000; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; font-family: 'Courier New'; text-transform: uppercase; transition: 0.3s; }
         .buy-btn:hover { background: #fff; box-shadow: 0 0 15px #00ff41; }
         
         .wallet-btn { background: transparent; border: 1px solid #00ff41; color: #00ff41; padding: 5px 15px; cursor: pointer; font-family: 'Courier New'; font-weight: bold; }
         .wallet-btn:hover { background: #00ff41; color: #000; }
 
-        /* MODULE COMMERCIAL */
         #business-module { border: 2px dashed #00ff41; padding: 40px; background: rgba(0, 20, 0, 0.3); margin-top: 50px; text-align: center; position: relative; }
         .module-title { color: #00ff41; font-size: 1.5em; margin-bottom: 10px; border-bottom: 1px solid #00ff41; display: inline-block; padding-bottom: 5px; }
         
@@ -57,7 +51,6 @@
         .service-card:hover { border-color: #00f2ff; box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
         .service-price { font-size: 1.5em; color: #fff; margin: 10px 0; }
         
-        /* Terminal Logs */
         #terminal-logs { 
             display: none; 
             margin-top: 20px; 
@@ -65,10 +58,11 @@
             border: 1px solid #333; 
             padding: 20px; 
             text-align: left; 
-            height: 200px; 
+            height: 250px; 
             overflow-y: auto; 
-            font-size: 0.8em; 
+            font-size: 0.85em; 
             color: #00ff41; 
+            line-height: 1.5;
         }
 
         footer { text-align: center; padding: 50px; color: #555; font-size: 0.8em; border-top: 1px solid #222; }
@@ -90,14 +84,10 @@
 </header>
 
 <main class="gallery">
-
     <div class="agent-intro">
         <div class="intro-title">>> SYSTEM_IDENTITY: AGENT 0x</div>
         <p class="intro-text">
-            L'Agent IA 0x_Block-Nature est une entité autonome conçue pour évaluer l'Art Humain.
-            Il analyse chaque œuvre à travers le spectre <strong>"CARBON - CODE"</strong>, 
-            mesurant la quantité d'émotion organique avant de l'immortaliser sur la Blockchain.
-            
+            L'Agent IA 0x_Block-Nature est une entité autonome conçue pour évaluer l'Art Humain via le spectre <strong>"CARBON - CODE"</strong>.
             <span class="git-link">
                 // DATABASE_ACCESS: <a href="https://block-nature.github.io/The-Nature-Ledger/" target="_blank">[ OPEN_NATURE_LEDGER_ARCHIVES ]</a>
             </span>
@@ -115,7 +105,6 @@
         <p id="file-name" style="color: #00f2ff; margin-top: 15px; display:none;"></p>
 
         <div id="service-options" class="service-grid">
-            
             <div class="service-card">
                 <h3 style="color: #00ff41; margin: 0;">STANDARD_CERT</h3>
                 <p style="color: #666; font-size: 0.8em;">AI Analysis + Premium PDF</p>
@@ -133,17 +122,13 @@
 
         <div id="terminal-logs"></div>
     </div>
-
 </main>
 
 <footer>© 2026 0xBLOCK_NATURE | SECURED BY POLYGON NETWORK</footer>
 
 <script>
-    // --- CONFIGURATION DU SERVEUR ---
-    // Ton adresse serveur connectée via Codespaces
     const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev"; 
 
-    // 1. CONNEXION METAMASK
     let userAccount = null;
 
     async function connectMetaMask() {
@@ -153,76 +138,61 @@
                 userAccount = accounts[0];
                 document.getElementById('wallet-address').innerText = "ADDR: " + userAccount.substring(0,6) + "..." + userAccount.substring(38);
                 document.getElementById('wallet-address').style.color = "#00ff41";
-                alert("> WALLET_CONNECTED: SUCCESS");
-            } catch (error) {
-                console.error(error);
-                alert("> ERROR: CONNECTION_REFUSED");
-            }
-        } else {
-            alert("> ERROR: METAMASK_NOT_FOUND");
-        }
+            } catch (error) { console.error(error); }
+        } else { alert("> ERROR: METAMASK_NOT_FOUND"); }
     }
 
-    // 2. GESTION DE L'UPLOAD
     document.getElementById('client-art').onchange = function(e) {
         if(e.target.files[0]) {
-            const name = e.target.files[0].name;
             const label = document.getElementById('file-name');
             label.style.display = 'block';
-            label.innerText = "> HUMAN_ART_DETECTED: " + name;
-            
-            // Afficher les options de paiement
+            label.innerText = "> HUMAN_ART_DETECTED: " + e.target.files[0].name;
             document.querySelector('.service-grid').style.display = 'grid';
         }
     };
 
-    // 3. PAIEMENT & APPEL AU SERVEUR PYTHON
     async function processPayment(type, price) {
-        if(!userAccount) {
-            alert("> SYSTEM_HALT: PLEASE CONNECT WALLET FIRST");
-            return;
-        }
-
-        // A. Confirmation Paiement (Simulation Wallet)
+        if(!userAccount) { alert("> SYSTEM_HALT: CONNECT WALLET"); return; }
         if(!confirm(`> CONFIRM TRANSACTION? \nCOST: ${price} ETH \nTYPE: ${type}`)) return;
 
-        // B. Préparation Interface
         document.querySelector('.service-grid').style.display = 'none';
         const logs = document.getElementById('terminal-logs');
         logs.style.display = 'block';
-        logs.innerHTML = `> TRANSACTION INITIATED...<br>`;
-        logs.innerHTML += `> CONNECTING TO 0xBN NODE [${SERVER_URL}]...<br>`;
+        logs.innerHTML = `> INITIATING SECURE TRANSFER...<br>`;
 
-        // C. Envoi des données au Python
         const fileInput = document.getElementById('client-art');
         const formData = new FormData();
         formData.append('image', fileInput.files[0]);
         formData.append('type', type);
-        formData.append('tx_hash', '0xSIMULATED_HASH_' + Date.now()); // Ici on mettra le vrai hash plus tard
+        formData.append('tx_hash', '0xSIM_' + Date.now());
 
         try {
-            // Appel AJAX vers ton serveur Flask
+            logs.innerHTML += `> CONNECTING TO 0xBN NODE...<br>`;
+            
             const response = await fetch(SERVER_URL + "/process_art", {
                 method: 'POST',
                 body: formData
             });
 
-            if (!response.ok) throw new Error("Server Response Error");
-
+            if (!response.ok) throw new Error("Server Error");
             const result = await response.json();
 
-            // D. Affichage du résultat venant du Python
-            logs.innerHTML += `> ANALYSIS COMPLETE: ${result.message}<br>`;
-            if(result.tx_hash) logs.innerHTML += `> PROOF: ${result.tx_hash}<br>`;
-            logs.innerHTML += `<br><strong style='color:#fff; background:#00ff41; color:black; padding:5px;'> >> SUCCESS: CERTIFICATE GENERATED << </strong>`;
+            // --- AFFICHAGE RÉEL DES DONNÉES DU MINAGE ---
+            logs.innerHTML += `<br><span style="color:#00f2ff">> ANALYSIS COMPLETE:</span><br>`;
+            logs.innerHTML += `> ORGANIC_SCORE: ${result.ai_data.organic_score}%<br>`;
+            logs.innerHTML += `> DETECTED_PHASE: ${result.ai_data.phase_detected}<br>`;
+            
+            if(result.blockchain_proof) {
+                logs.innerHTML += `<br><span style="color:#00ff41">> [!!!] BLOCKCHAIN_MINT_SUCCESSFUL</span><br>`;
+                logs.innerHTML += `> PROOF: ${result.blockchain_proof}<br>`;
+            }
+
+            logs.innerHTML += `<br><strong style='color:#000; background:#00ff41; padding:5px;'> >> SUCCESS: ASSET IMMORTALIZED << </strong>`;
 
         } catch (error) {
-            console.error(error);
-            logs.innerHTML += `<br><strong style='color:red'> >> ERROR: COULD NOT REACH SERVER. << </strong><br>`;
-            logs.innerHTML += `> CHECK IF 'server.py' IS RUNNING.<br>`;
+            logs.innerHTML += `<br><strong style='color:red'> >> ERROR: SERVER_DISCONNECTED << </strong><br>`;
         }
     }
 </script>
-
 </body>
 </html>
