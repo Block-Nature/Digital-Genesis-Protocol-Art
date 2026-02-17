@@ -15,13 +15,38 @@
             align-items: center; 
             min-height: 100vh; 
         }
-        
         .container { width: 90%; max-width: 600px; text-align: center; margin-top: 40px; }
-        
         h1 { color: #fff; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); margin-bottom: 5px; }
         .subtitle { color: #00ff41; font-size: 0.9em; margin-bottom: 20px; }
 
-        /* LIEN SITE WEB : JAUNE FLUO ET TRÈS VISIBLE */
+        /* BANNIÈRE BETA */
+        .beta-banner {
+            background: rgba(251, 255, 0, 0.07);
+            border: 1px solid #fbff00;
+            color: #fbff00;
+            font-size: 0.72em;
+            padding: 10px 16px;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+            text-align: center;
+            animation: pulseBeta 3s ease-in-out infinite;
+        }
+        .beta-tag {
+            background: #fbff00;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.85em;
+            padding: 2px 7px;
+            margin-right: 6px;
+            letter-spacing: 1px;
+        }
+        @keyframes pulseBeta {
+            0%, 100% { box-shadow: 0 0 6px rgba(251,255,0,0.2); }
+            50%       { box-shadow: 0 0 18px rgba(251,255,0,0.45); }
+        }
+
+        /* LIEN SITE WEB */
         .site-link {
             color: #fbff00;
             text-decoration: none;
@@ -31,7 +56,7 @@
             padding: 10px 20px;
             transition: 0.3s;
             display: inline-block;
-            margin-bottom: 30px;
+            margin-bottom: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
             box-shadow: 0 0 10px rgba(251, 255, 0, 0.3);
@@ -42,46 +67,68 @@
             box-shadow: 0 0 30px rgba(251, 255, 0, 0.8);
         }
 
+        /* LIEN GALERIE */
+        .gallery-link {
+            color: #00f2ff;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: bold;
+            border: 1px solid #00f2ff;
+            padding: 9px 18px;
+            transition: 0.3s;
+            display: inline-block;
+            margin-bottom: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 8px rgba(0, 242, 255, 0.2);
+        }
+        .gallery-link:hover {
+            background: #00f2ff;
+            color: #000;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.7);
+        }
+        .gallery-link::before { content: "▶ "; font-size: 0.8em; }
+
         /* BOITE D'UPLOAD */
         .upload-box { border: 1px dashed #333; padding: 40px; background: #0a0a0c; border-radius: 8px; }
-        
         .email-input { 
-            background: #0f0f12; 
-            border: 1px solid #222; 
-            color: #00ff41; 
-            padding: 12px; 
-            width: 90%; 
-            text-align: center; 
-            font-family: 'Courier New'; 
-            margin-bottom: 20px; 
-            font-size: 1em; 
-            opacity: 0.7;
+            background: #0f0f12; border: 1px solid #222; color: #00ff41; 
+            padding: 12px; width: 90%; text-align: center; 
+            font-family: 'Courier New'; margin-bottom: 20px; font-size: 1em; opacity: 0.7;
         }
-        
-        .btn-main { background: #00ff41; color: #000; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; width: 100%; transition: 0.3s; }
+        .btn-main { 
+            background: #00ff41; color: #000; border: none; padding: 15px 30px; 
+            font-weight: bold; cursor: pointer; font-size: 1em; text-transform: uppercase; 
+            letter-spacing: 1px; width: 100%; transition: 0.3s; 
+        }
         .btn-main:hover { background: #fff; box-shadow: 0 0 20px #00ff41; }
 
         /* ZONE RÉSULTAT */
-        #result-area { display: none; border: 2px solid #00ff41; padding: 30px; background: rgba(0, 20, 0, 0.4); margin-top: 30px; animation: fadeIn 1s; }
+        #result-area { 
+            display: none; border: 2px solid #00ff41; padding: 30px; 
+            background: rgba(0, 20, 0, 0.4); margin-top: 30px; animation: fadeIn 1s; 
+        }
         .score-big { font-size: 4em; font-weight: bold; color: #fff; margin: 0; text-shadow: 0 0 20px #00ff41; }
         .score-label { color: #00ff41; letter-spacing: 2px; font-size: 0.8em; text-transform: uppercase; }
-        .ai-desc { color: #ccc; font-style: italic; margin: 20px 0; padding: 15px; border-left: 3px solid #00ff41; background: #000; text-align: left; font-size: 0.9em; }
+        .ai-desc { 
+            color: #ccc; font-style: italic; margin: 20px 0; padding: 15px; 
+            border-left: 3px solid #00ff41; background: #000; text-align: left; font-size: 0.9em; 
+        }
 
-        /* BOUTON TÉLÉCHARGEMENT CERTIFICAT */
+        /* BOUTON TÉLÉCHARGEMENT */
         .btn-download { 
-            background: #fff; 
-            color: #000; 
-            text-decoration: none; 
-            padding: 18px 20px; 
-            display: block; 
-            margin-top: 20px; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            border: 2px solid #fff; 
-            font-size: 1em;
-            transition: 0.3s;
+            background: #fff; color: #000; text-decoration: none; padding: 18px 20px; 
+            display: block; margin-top: 20px; font-weight: bold; text-transform: uppercase; 
+            border: 2px solid #fff; font-size: 1em; transition: 0.3s;
         }
         .btn-download:hover { background: #00ff41; color: #000; border-color: #00ff41; box-shadow: 0 0 20px #00ff41; }
+
+        /* FOOTER */
+        .footer {
+            width: 90%; max-width: 600px; text-align: center;
+            margin: 40px auto 30px; padding-top: 20px;
+            border-top: 1px solid #1a1a1a; font-family: 'Courier New', monospace;
+        }
 
         #loader { display: none; color: #00ff41; margin-top: 20px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -93,21 +140,45 @@
     <h1>0xBLOCK_NATURE</h1>
     <div class="subtitle">PROTOCOL D'IMMORTALITÉ // MIKE SALADIN</div>
 
+    <!-- BANNIÈRE BETA -->
+    <div class="beta-banner">
+        <span class="beta-tag">BETA</span>
+        L'Agent IA 0xBlock-Nature opère actuellement en version Beta Test.<br>
+        Merci de contribuer à l'évolution du Protocole d'Immortalité.
+    </div>
+
+    <!-- PORTAIL OFFICIEL -->
     <a href="https://www.block-nature.com/" target="_blank" class="site-link">
         [ PORTAIL OFFICIEL : BLOCK-NATURE.COM ]
     </a>
 
+    <br>
+
+    <!-- GALERIE IA VS HUMAIN -->
+    <a href="https://block-nature.github.io/The-Nature-Ledger/" target="_blank" class="gallery-link">
+        GALLERY IA VS HUMAIN
+    </a>
+
     <div class="upload-box" id="form-area">
-        <p style="color: #444; font-size: 0.7em; margin-bottom: 5px;">> NODE IDENTIFIED</p>
+        <p style="color:#444;font-size:0.7em;margin-bottom:5px;">> NODE IDENTIFIED</p>
+
+        <!-- TEXTE EXPLICATIF -->
+        <p style="color:#aaaaaa;font-size:0.78em;line-height:1.7;margin-bottom:20px;border-left:2px solid #00ff41;padding-left:12px;text-align:left;">
+            Télécharge une image pour recevoir ton premier certificat numérique de ton art.<br>
+            <span style="color:#666;">Ce certificat t'aidera à protéger ton œuvre d'Art du plagiat.</span>
+        </p>
+
         <input type="email" id="email" class="email-input" value="blocknature.nft@gmail.com" readonly>
         
-        <input type="file" id="file-upload" accept="image/*" style="display: none;">
+        <input type="file" id="file-upload" accept="image/*" style="display:none;">
         <button class="btn-main" onclick="document.getElementById('file-upload').click()">
             [ 1. SÉLECTIONNER L'ŒUVRE ]
         </button>
-        <p id="filename" style="color: #00f2ff; font-size: 0.8em; margin-top: 10px;"></p>
+        <p id="filename" style="color:#00f2ff;font-size:0.8em;margin-top:10px;"></p>
         
-        <button class="btn-main" id="btn-certify" style="background: #222; color: #555; margin-top: 10px; cursor: not-allowed;" disabled onclick="launchProcess()">
+        <button class="btn-main" id="btn-certify" 
+                style="background:#222;color:#555;margin-top:10px;cursor:not-allowed;" 
+                disabled onclick="launchProcess()">
             [ 2. CERTIFIER ]
         </button>
     </div>
@@ -115,15 +186,13 @@
     <div id="loader">
         > ANALYSE SPECTRALE...<br>
         > HACHAGE BIOMÉTRIQUE...<br>
-        <span style="font-size: 2em;">⏳</span>
+        <span style="font-size:2em;">⏳</span>
     </div>
 
     <div id="result-area">
         <p class="score-label">RÉSONANCE ORGANIQUE</p>
         <div class="score-big"><span id="score-val">0</span>/100</div>
-        
         <div class="ai-desc" id="desc-val">"..."</div>
-
         <a href="#" id="download-link" class="btn-download" target="_blank">
             📥 TÉLÉCHARGER MON CERTIFICAT NUMÉRIQUE
         </a>
@@ -131,9 +200,26 @@
 
 </div>
 
+<!-- FOOTER CONTACT -->
+<footer class="footer">
+    <p style="color:#333;font-size:0.65em;letter-spacing:1px;margin-bottom:10px;">— CONTACT —</p>
+    <p style="color:#c9a84c;font-size:0.8em;font-weight:bold;margin:4px 0;letter-spacing:1px;">MIKE SALADIN</p>
+    <a href="https://www.block-nature.com/" target="_blank"
+       style="color:#00ff41;font-size:0.75em;text-decoration:none;display:block;margin:4px 0;"
+       onmouseover="this.style.textShadow='0 0 10px #00ff41'"
+       onmouseout="this.style.textShadow='none'">
+        block-nature.com
+    </a>
+    <a href="mailto:blocknature.nft@gmail.com"
+       style="color:#555;font-size:0.7em;text-decoration:none;display:block;margin:4px 0;"
+       onmouseover="this.style.color='#aaa'"
+       onmouseout="this.style.color='#555'">
+        blocknature.nft@gmail.com
+    </a>
+</footer>
+
 <script>
-    // TON ADRESSE SERVEUR MISE À JOUR
-    const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev"; 
+    const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev";
 
     const fileInput = document.getElementById('file-upload');
     const certifyBtn = document.getElementById('btn-certify');
@@ -151,7 +237,6 @@
     async function launchProcess() {
         const email = document.getElementById('email').value;
         const file = fileInput.files[0];
-
         if(!file) return alert("Veuillez sélectionner une image.");
         
         document.getElementById('form-area').style.display = 'none';
@@ -171,14 +256,10 @@
             if (data.status === "success") {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('result-area').style.display = 'block';
-                
                 document.getElementById('score-val').innerText = data.score;
                 document.getElementById('desc-val').innerText = "> " + data.description;
-                
-                // CORRECTION : On utilise SERVER_URL pour éviter localhost
                 const fileName = data.download_url.split('/').pop();
                 document.getElementById('download-link').href = `${SERVER_URL}/download/${fileName}`;
-                
             } else {
                 alert("ERREUR: " + data.message);
                 location.reload();
