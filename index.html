@@ -21,54 +21,68 @@
         h1 { color: #fff; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); margin-bottom: 5px; }
         .subtitle { color: #00ff41; font-size: 0.9em; margin-bottom: 20px; }
 
-        /* NOUVEAU : LIEN RETOUR SITE */
+        /* LIEN SITE WEB : JAUNE FLUO ET TRÈS VISIBLE */
         .site-link {
-            color: #666;
+            color: #fbff00;
             text-decoration: none;
-            font-size: 0.7em;
-            border: 1px solid #333;
-            padding: 5px 10px;
+            font-size: 1em;
+            font-weight: bold;
+            border: 2px solid #fbff00;
+            padding: 10px 20px;
             transition: 0.3s;
             display: inline-block;
             margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(251, 255, 0, 0.3);
         }
         .site-link:hover {
-            color: #00ff41;
-            border-color: #00ff41;
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+            background: #fbff00;
+            color: #000;
+            box-shadow: 0 0 30px rgba(251, 255, 0, 0.8);
         }
 
         /* BOITE D'UPLOAD */
-        .upload-box { border: 1px dashed #333; padding: 40px; background: #0a0a0c; border-radius: 8px; transition: 0.3s; }
+        .upload-box { border: 1px dashed #333; padding: 40px; background: #0a0a0c; border-radius: 8px; }
         
-        /* CHAMP EMAIL PRÉ-REMPLI (Style discret mais visible) */
         .email-input { 
             background: #0f0f12; 
             border: 1px solid #222; 
-            color: #888; 
+            color: #00ff41; 
             padding: 12px; 
             width: 90%; 
             text-align: center; 
             font-family: 'Courier New'; 
             margin-bottom: 20px; 
             font-size: 1em; 
+            opacity: 0.7;
         }
         
         .btn-main { background: #00ff41; color: #000; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; width: 100%; transition: 0.3s; }
         .btn-main:hover { background: #fff; box-shadow: 0 0 20px #00ff41; }
 
-        /* BOITE DE RÉSULTAT */
+        /* ZONE RÉSULTAT */
         #result-area { display: none; border: 2px solid #00ff41; padding: 30px; background: rgba(0, 20, 0, 0.4); margin-top: 30px; animation: fadeIn 1s; }
-        
         .score-big { font-size: 4em; font-weight: bold; color: #fff; margin: 0; text-shadow: 0 0 20px #00ff41; }
         .score-label { color: #00ff41; letter-spacing: 2px; font-size: 0.8em; text-transform: uppercase; }
-        
         .ai-desc { color: #ccc; font-style: italic; margin: 20px 0; padding: 15px; border-left: 3px solid #00ff41; background: #000; text-align: left; font-size: 0.9em; }
 
-        .btn-download { background: #fff; color: #000; text-decoration: none; padding: 15px 20px; display: block; margin-top: 20px; font-weight: bold; text-transform: uppercase; border: 2px solid #fff; }
-        .btn-download:hover { background: #000; color: #fff; }
+        /* BOUTON TÉLÉCHARGEMENT CERTIFICAT */
+        .btn-download { 
+            background: #fff; 
+            color: #000; 
+            text-decoration: none; 
+            padding: 18px 20px; 
+            display: block; 
+            margin-top: 20px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            border: 2px solid #fff; 
+            font-size: 1em;
+            transition: 0.3s;
+        }
+        .btn-download:hover { background: #00ff41; color: #000; border-color: #00ff41; box-shadow: 0 0 20px #00ff41; }
 
-        /* LOADER */
         #loader { display: none; color: #00ff41; margin-top: 20px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -80,12 +94,11 @@
     <div class="subtitle">PROTOCOL D'IMMORTALITÉ // MIKE SALADIN</div>
 
     <a href="https://www.block-nature.com/" target="_blank" class="site-link">
-        [ ACCÈS PORTAIL : WWW.BLOCK-NATURE.COM ]
+        [ PORTAIL OFFICIEL : BLOCK-NATURE.COM ]
     </a>
 
     <div class="upload-box" id="form-area">
-        <p style="color: #444; font-size: 0.7em; margin-bottom: 5px;">> IDENTIFIANT NODE (AUTO)</p>
-        
+        <p style="color: #444; font-size: 0.7em; margin-bottom: 5px;">> NODE IDENTIFIED</p>
         <input type="email" id="email" class="email-input" value="blocknature.nft@gmail.com" readonly>
         
         <input type="file" id="file-upload" accept="image/*" style="display: none;">
@@ -100,8 +113,8 @@
     </div>
 
     <div id="loader">
-        > ANALYSE SPECTRALE EN COURS...<br>
-        > GÉNÉRATION DU HASH NFT...<br>
+        > ANALYSE SPECTRALE...<br>
+        > HACHAGE BIOMÉTRIQUE...<br>
         <span style="font-size: 2em;">⏳</span>
     </div>
 
@@ -109,20 +122,17 @@
         <p class="score-label">RÉSONANCE ORGANIQUE</p>
         <div class="score-big"><span id="score-val">0</span>/100</div>
         
-        <div class="ai-desc" id="desc-val">
-            "Analyse en attente..."
-        </div>
+        <div class="ai-desc" id="desc-val">"..."</div>
 
         <a href="#" id="download-link" class="btn-download" target="_blank">
-            📥 TÉLÉCHARGER MA BLACK CARD
+            📥 TÉLÉCHARGER MON CERTIFICAT NUMÉRIQUE
         </a>
     </div>
 
 </div>
 
 <script>
-    // --- TON ADRESSE SERVEUR (Ne change rien si ça marche déjà) ---
-    // Vérifie que c'est bien la bonne adresse de tes PORTS (onglet Ports)
+    // TON ADRESSE SERVEUR MISE À JOUR
     const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev"; 
 
     const fileInput = document.getElementById('file-upload');
@@ -164,14 +174,17 @@
                 
                 document.getElementById('score-val').innerText = data.score;
                 document.getElementById('desc-val').innerText = "> " + data.description;
-                document.getElementById('download-link').href = data.download_url;
+                
+                // CORRECTION : On utilise SERVER_URL pour éviter localhost
+                const fileName = data.download_url.split('/').pop();
+                document.getElementById('download-link').href = `${SERVER_URL}/download/${fileName}`;
+                
             } else {
                 alert("ERREUR: " + data.message);
                 location.reload();
             }
         } catch (error) {
-            alert("Erreur de connexion. Vérifie que le serveur Python tourne !");
-            console.error(error);
+            alert("Erreur de connexion. Assurez-vous que le serveur Python est lancé !");
             location.reload();
         }
     }
