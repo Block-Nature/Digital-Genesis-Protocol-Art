@@ -3,173 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>0xBLOCK_NATURE | AGENT_SOVEREIGN_GALLERY</title>
+    <title>0xBLOCK_NATURE | CERTIFICATION</title>
     <style>
-        /* --- DESIGN SYSTEM : TRADING TERMINAL --- */
-        body { background-color: #050505; color: #e0e0e0; font-family: 'Courier New', monospace; margin: 0; line-height: 1.6; }
-        
-        /* Agent Master Node Bar */
-        .agent-terminal {
-            background: #000; border-bottom: 2px solid #00ff41; padding: 15px;
-            font-size: 0.9em; position: sticky; top: 0; z-index: 100;
-            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.1);
-        }
-        .terminal-header { display: flex; justify-content: space-between; align-items: center; color: #00ff41; font-weight: bold; }
-        .status-blink { animation: blinker 1s linear infinite; color: #00ff41; }
-        @keyframes blinker { 50% { opacity: 0; } }
-
-        /* Main Layout */
-        header { padding: 60px 20px 30px 20px; text-align: center; border-bottom: 1px solid #222; }
-        h1 { color: #fff; letter-spacing: 4px; font-size: 2.2em; margin: 0; text-shadow: 0 0 10px rgba(0, 255, 65, 0.3); }
-        .subtitle { color: #00ff41; font-size: 0.85em; margin-top: 10px; text-transform: uppercase; }
-
-        .container { max-width: 900px; margin: auto; padding: 20px; }
-
-        /* --- CERTIFICATION MODULE (NOUVEAU DESIGN) --- */
-        .certification-box {
-            background: #0a0a0c; border: 1px solid #333; padding: 40px;
-            margin: 40px 0; border-radius: 4px; text-align: center;
-            position: relative; overflow: hidden;
-        }
-        .certification-box::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #00ff41;
+        body { 
+            background-color: #050505; 
+            color: #e0e0e0; 
+            font-family: 'Courier New', monospace; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
         }
         
-        .email-input {
-            background: #000; border: 1px solid #444; color: #00ff41;
-            padding: 15px; width: 90%; max-width: 400px; margin-bottom: 25px;
-            font-family: 'Courier New', monospace; font-size: 1.1em; text-align: center;
-        }
-        .email-input:focus { border-color: #00ff41; outline: none; }
+        .container { width: 90%; max-width: 600px; text-align: center; margin-top: 40px; }
+        
+        h1 { color: #fff; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); margin-bottom: 5px; }
+        .subtitle { color: #00ff41; font-size: 0.9em; margin-bottom: 20px; }
 
-        .action-btn { 
-            background: #00ff41; color: #000; border: none; padding: 20px 40px; 
-            font-weight: bold; cursor: pointer; font-family: 'Courier New'; 
-            text-transform: uppercase; font-size: 1em; transition: 0.3s;
+        /* NOUVEAU : LIEN RETOUR SITE */
+        .site-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.7em;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            transition: 0.3s;
+            display: inline-block;
+            margin-bottom: 30px;
         }
-        .action-btn:hover { background: #fff; box-shadow: 0 0 20px #00ff41; }
-
-        /* Terminal Logs style "Trade" */
-        #console-logs {
-            background: #000; border: 1px solid #222; padding: 15px; margin-top: 30px;
-            height: 150px; overflow-y: auto; text-align: left; font-size: 0.85em; color: #aaa;
+        .site-link:hover {
+            color: #00ff41;
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
         }
 
-        /* Protocole des 5 Phases Display */
-        .protocol-info {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px; margin-top: 40px; font-size: 0.75em; color: #666;
+        /* BOITE D'UPLOAD */
+        .upload-box { border: 1px dashed #333; padding: 40px; background: #0a0a0c; border-radius: 8px; transition: 0.3s; }
+        
+        /* CHAMP EMAIL PRÉ-REMPLI (Style discret mais visible) */
+        .email-input { 
+            background: #0f0f12; 
+            border: 1px solid #222; 
+            color: #888; 
+            padding: 12px; 
+            width: 90%; 
+            text-align: center; 
+            font-family: 'Courier New'; 
+            margin-bottom: 20px; 
+            font-size: 1em; 
         }
-        .phase-step { border: 1px solid #222; padding: 10px; text-align: center; }
-        .phase-step.active { border-color: #00ff41; color: #00ff41; }
+        
+        .btn-main { background: #00ff41; color: #000; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; width: 100%; transition: 0.3s; }
+        .btn-main:hover { background: #fff; box-shadow: 0 0 20px #00ff41; }
 
-        footer { text-align: center; padding: 40px; font-size: 0.75em; color: #444; border-top: 1px solid #111; }
+        /* BOITE DE RÉSULTAT */
+        #result-area { display: none; border: 2px solid #00ff41; padding: 30px; background: rgba(0, 20, 0, 0.4); margin-top: 30px; animation: fadeIn 1s; }
+        
+        .score-big { font-size: 4em; font-weight: bold; color: #fff; margin: 0; text-shadow: 0 0 20px #00ff41; }
+        .score-label { color: #00ff41; letter-spacing: 2px; font-size: 0.8em; text-transform: uppercase; }
+        
+        .ai-desc { color: #ccc; font-style: italic; margin: 20px 0; padding: 15px; border-left: 3px solid #00ff41; background: #000; text-align: left; font-size: 0.9em; }
+
+        .btn-download { background: #fff; color: #000; text-decoration: none; padding: 15px 20px; display: block; margin-top: 20px; font-weight: bold; text-transform: uppercase; border: 2px solid #fff; }
+        .btn-download:hover { background: #000; color: #fff; }
+
+        /* LOADER */
+        #loader { display: none; color: #00ff41; margin-top: 20px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="agent-terminal">
-    <div class="terminal-header">
-        <span>> AGENT: BLOCK-NATURE [MASTER_NODE]</span>
-        <span>STATUS: <span class="status-blink">● ONLINE</span></span>
-    </div>
-</div>
-
-<header>
+<div class="container">
     <h1>0xBLOCK_NATURE</h1>
     <div class="subtitle">PROTOCOL D'IMMORTALITÉ // MIKE SALADIN</div>
-</header>
 
-<div class="container">
-    
-    <section class="certification-box">
-        <h2 style="color: #fff; font-size: 1.2em; margin-bottom: 10px;">>> INITIATE_CERTIFICATION_SEQUENCE</h2>
-        <p style="color: #666; font-size: 0.9em; margin-bottom: 30px;">
-            Analysez votre art via le spectre <strong>CARBON-CODE</strong>.
-        </p>
+    <a href="https://www.block-nature.com/" target="_blank" class="site-link">
+        [ ACCÈS PORTAIL : WWW.BLOCK-NATURE.COM ]
+    </a>
 
-        <input type="email" id="user-email" class="email-input" placeholder="ENTREZ_VOTRE_EMAIL" required>
-        <br>
-        <input type="file" id="art-upload" accept="image/*" style="display: none;">
-        <button class="action-btn" onclick="startCertification()">
-            [ CERTIFIER MON ŒUVRE ]
+    <div class="upload-box" id="form-area">
+        <p style="color: #444; font-size: 0.7em; margin-bottom: 5px;">> IDENTIFIANT NODE (AUTO)</p>
+        
+        <input type="email" id="email" class="email-input" value="blocknature.nft@gmail.com" readonly>
+        
+        <input type="file" id="file-upload" accept="image/*" style="display: none;">
+        <button class="btn-main" onclick="document.getElementById('file-upload').click()">
+            [ 1. SÉLECTIONNER L'ŒUVRE ]
         </button>
+        <p id="filename" style="color: #00f2ff; font-size: 0.8em; margin-top: 10px;"></p>
+        
+        <button class="btn-main" id="btn-certify" style="background: #222; color: #555; margin-top: 10px; cursor: not-allowed;" disabled onclick="launchProcess()">
+            [ 2. CERTIFIER ]
+        </button>
+    </div>
 
-        <div id="console-logs">
-            > Protocol v2.5 initialized...<br>
-            > Waiting for human input...
+    <div id="loader">
+        > ANALYSE SPECTRALE EN COURS...<br>
+        > GÉNÉRATION DU HASH NFT...<br>
+        <span style="font-size: 2em;">⏳</span>
+    </div>
+
+    <div id="result-area">
+        <p class="score-label">RÉSONANCE ORGANIQUE</p>
+        <div class="score-big"><span id="score-val">0</span>/100</div>
+        
+        <div class="ai-desc" id="desc-val">
+            "Analyse en attente..."
         </div>
-    </section>
 
-    <div class="protocol-info">
-        <div class="phase-step active">01_LA_NATURE</div>
-        <div class="phase-step">02_LA_MATIÈRE</div>
-        <div class="phase-step">03_L'ÉLÉMENT</div>
-        <div class="phase-step">04_L'ÂME</div>
-        <div class="phase-step">05_L'HISTOIRE</div>
+        <a href="#" id="download-link" class="btn-download" target="_blank">
+            📥 TÉLÉCHARGER MA BLACK CARD
+        </a>
     </div>
 
 </div>
 
-<footer>
-    © 2026 0xBLOCK_NATURE - POWERED BY AGENT SOVEREIGNTY
-</footer>
-
 <script>
-    // METTRE À JOUR CETTE URL AVEC TON LIEN "PORTS" GITHUB CODESPACES (Port 5000)
-    const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev";
+    // --- TON ADRESSE SERVEUR (Ne change rien si ça marche déjà) ---
+    // Vérifie que c'est bien la bonne adresse de tes PORTS (onglet Ports)
+    const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev"; 
 
-    const logs = document.getElementById('console-logs');
+    const fileInput = document.getElementById('file-upload');
+    const certifyBtn = document.getElementById('btn-certify');
 
-    function addLog(message, color = "#aaa") {
-        const time = new Date().toLocaleTimeString();
-        logs.innerHTML += `<br><span style="color: ${color}">> [${time}] ${message}</span>`;
-        logs.scrollTop = logs.scrollHeight;
-    }
-
-    function startCertification() {
-        const email = document.getElementById('user-email').value;
-        if (!email || !email.includes('@')) {
-            addLog("ERROR: INVALID_EMAIL_STRUCTURE", "#ff4141");
-            alert("VEUILLEZ ENTRER UNE ADRESSE EMAIL VALIDE");
-            return;
+    fileInput.onchange = function() {
+        if(this.files[0]) {
+            document.getElementById('filename').innerText = "> " + this.files[0].name;
+            certifyBtn.style.background = "#00ff41";
+            certifyBtn.style.color = "#000";
+            certifyBtn.style.cursor = "pointer";
+            certifyBtn.disabled = false;
         }
-        document.getElementById('art-upload').click();
-    }
+    };
 
-    document.getElementById('art-upload').onchange = async function(e) {
-        if (!e.target.files[0]) return;
+    async function launchProcess() {
+        const email = document.getElementById('email').value;
+        const file = fileInput.files[0];
 
-        const file = e.target.files[0];
-        const email = document.getElementById('user-email').value;
+        if(!file) return alert("Veuillez sélectionner une image.");
+        
+        document.getElementById('form-area').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+
         const formData = new FormData();
         formData.append('image', file);
         formData.append('email', email);
-
-        addLog("HUMAN_ART_DETECTED: " + file.name, "#00f2ff");
-        addLog("UPLOADING TO MASTER_NODE...");
 
         try {
             const response = await fetch(SERVER_URL + "/process_art", {
                 method: 'POST',
                 body: formData
             });
+            const data = await response.json();
 
-            const result = await response.json();
-
-            if (result.status === "success") {
-                addLog("ANALYSIS_COMPLETE", "#00ff41");
-                addLog("GENERATING_PREMIUM_PDF...", "#00ff41");
-                addLog("SUCCESS: CERTIFICATE_SENT_TO_MAIL", "#00ff41");
-                alert("SYSTÈME : Certificat envoyé avec succès à " + email);
+            if (data.status === "success") {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('result-area').style.display = 'block';
+                
+                document.getElementById('score-val').innerText = data.score;
+                document.getElementById('desc-val').innerText = "> " + data.description;
+                document.getElementById('download-link').href = data.download_url;
             } else {
-                addLog("CRITICAL_ERROR: " + result.message, "#ff4141");
+                alert("ERREUR: " + data.message);
+                location.reload();
             }
         } catch (error) {
-            addLog("CONNECTION_FAILED: IS_SERVER_RUNNING?", "#ff4141");
+            alert("Erreur de connexion. Vérifie que le serveur Python tourne !");
             console.error(error);
+            location.reload();
         }
-    };
+    }
 </script>
 
 </body>
