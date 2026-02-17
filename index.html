@@ -1,198 +1,42 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>0xBLOCK_NATURE | PROTOCOL_MAIN</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-    <style>
-        /* --- DESIGN SYSTEM : HACKER TERMINAL --- */
-        body { background-color: #050505; color: #e0e0e0; font-family: 'Courier New', monospace; margin: 0; }
-        
-        .agent-terminal { 
-            background: #000; border-bottom: 2px solid #00ff41; padding: 15px; 
-            position: sticky; top: 0; z-index: 100; 
-            display: flex; justify-content: space-between; align-items: center; 
-        }
-        .status { color: #00ff41; font-weight: bold; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+<div id="business-module">
+    <div class="module-title">>> ACCÈS AU PROTOCOLE</div>
+    <p>Entrez votre email pour recevoir votre certificat d'authenticité.</p>
+    
+    <input type="email" id="user-email" placeholder="VOTRE@EMAIL.COM" 
+           style="background:#000; border:1px solid #00FF41; color:#00FF41; padding:15px; width:80%; margin:20px 0; text-align:center;">
+    
+    <br>
+    <button class="buy-btn" onclick="document.getElementById('art-upload').click()">
+        [ SÉLECTIONNER VOTRE ŒUVRE ]
+    </button>
+    <input type="file" id="art-upload" style="display:none" onchange="envoyerProtocol()">
 
-        header { text-align: center; padding: 60px 20px; border-bottom: 1px solid #222; margin-bottom: 50px; }
-        h1 { font-size: 2.5em; margin: 0; letter-spacing: 4px; color: #fff; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
-
-        .gallery { max-width: 1000px; margin: auto; padding: 20px; }
-
-        .agent-intro {
-            border: 1px solid #333;
-            background: #080808;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 60px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
-        }
-        .intro-title { color: #00ff41; font-size: 1.2em; margin-bottom: 20px; border-bottom: 1px dashed #333; display: inline-block; padding-bottom: 5px; }
-        .intro-text { font-size: 1.1em; line-height: 1.6; color: #ccc; }
-        
-        .git-link { margin-top: 25px; display: block; font-size: 0.9em; color: #666; }
-        .git-link a { color: #00ff41; text-decoration: none; border-bottom: 1px dashed #00ff41; transition: 0.3s; }
-        .git-link a:hover { color: #fff; border-color: #fff; text-shadow: 0 0 5px #00ff41; }
-
-        .buy-btn { background: #00ff41; color: #000; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; font-family: 'Courier New'; text-transform: uppercase; transition: 0.3s; }
-        .buy-btn:hover { background: #fff; box-shadow: 0 0 15px #00ff41; }
-        
-        .wallet-btn { background: transparent; border: 1px solid #00ff41; color: #00ff41; padding: 5px 15px; cursor: pointer; font-family: 'Courier New'; font-weight: bold; }
-        .wallet-btn:hover { background: #00ff41; color: #000; }
-
-        #business-module { border: 2px dashed #00ff41; padding: 40px; background: rgba(0, 20, 0, 0.3); margin-top: 50px; text-align: center; position: relative; }
-        .module-title { color: #00ff41; font-size: 1.5em; margin-bottom: 10px; border-bottom: 1px solid #00ff41; display: inline-block; padding-bottom: 5px; }
-        
-        .service-grid { display: none; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; text-align: left; }
-        .service-card { border: 1px solid #333; padding: 20px; background: #000; transition: 0.3s; }
-        .service-card:hover { border-color: #00f2ff; box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
-        .service-price { font-size: 1.5em; color: #fff; margin: 10px 0; }
-        
-        #terminal-logs { 
-            display: none; 
-            margin-top: 20px; 
-            background: #000; 
-            border: 1px solid #333; 
-            padding: 20px; 
-            text-align: left; 
-            height: 250px; 
-            overflow-y: auto; 
-            font-size: 0.85em; 
-            color: #00ff41; 
-            line-height: 1.5;
-        }
-
-        footer { text-align: center; padding: 50px; color: #555; font-size: 0.8em; border-top: 1px solid #222; }
-    </style>
-</head>
-<body>
-
-<div class="agent-terminal">
-    <div>> NODE_STATUS: <span class="status">● ONLINE</span></div>
-    <div>
-        <span id="wallet-address" style="margin-right: 15px; color: #666;">[DISCONNECTED]</span>
-        <button class="wallet-btn" onclick="connectMetaMask()">[ CONNECT_METAMASK ]</button>
-    </div>
+    <div id="terminal-logs" style="margin-top:20px; display:none; border:1px solid #333; padding:15px; text-align:left; color:#00FF41;"></div>
 </div>
 
-<header>
-    <h1>0xBLOCK_NATURE</h1>
-    <div style="color:#00ff41; margin-top:10px;">HUMAN_ART // AI_CERTIFICATION_PROTOCOL</div>
-</header>
-
-<main class="gallery">
-    <div class="agent-intro">
-        <div class="intro-title">>> SYSTEM_IDENTITY: AGENT 0x</div>
-        <p class="intro-text">
-            L'Agent IA 0x_Block-Nature est une entité autonome conçue pour évaluer l'Art Humain via le spectre <strong>"CARBON - CODE"</strong>.
-            <span class="git-link">
-                // DATABASE_ACCESS: <a href="https://block-nature.github.io/The-Nature-Ledger/" target="_blank">[ OPEN_NATURE_LEDGER_ARCHIVES ]</a>
-            </span>
-        </p>
-    </div>
-    
-    <div id="business-module">
-        <div class="module-title">>> INITIATE_CERTIFICATION_SEQUENCE</div>
-        <p style="color: #888; margin-bottom: 30px;">UPLOAD ONLY YOUR ORIGINAL HUMAN ARTWORK FOR ANALYSIS</p>
-
-        <input type="file" id="client-art" accept="image/*" style="display: none;">
-        <button class="buy-btn" onclick="document.getElementById('client-art').click()" style="padding: 20px 40px; font-size: 1.2em;">
-            [ UPLOAD_HUMAN_ART ]
-        </button>
-        <p id="file-name" style="color: #00f2ff; margin-top: 15px; display:none;"></p>
-
-        <div id="service-options" class="service-grid">
-            <div class="service-card">
-                <h3 style="color: #00ff41; margin: 0;">STANDARD_CERT</h3>
-                <p style="color: #666; font-size: 0.8em;">AI Analysis + Premium PDF</p>
-                <div class="service-price">0.006 ETH</div>
-                <button class="wallet-btn" onclick="processPayment('PDF', '0.006')" style="width: 100%;">[ EXECUTE ]</button>
-            </div>
-
-            <div class="service-card" style="border-color: #00f2ff;">
-                <h3 style="color: #00f2ff; margin: 0;">GENESIS_MINT</h3>
-                <p style="color: #666; font-size: 0.8em;">PDF + Polygon Blockchain NFT</p>
-                <div class="service-price">0.009 ETH</div>
-                <button class="buy-btn" onclick="processPayment('MINT', '0.009')" style="width: 100%; background: #00f2ff;">[ MINT_NOW ]</button>
-            </div>
-        </div>
-
-        <div id="terminal-logs"></div>
-    </div>
-</main>
-
-<footer>© 2026 0xBLOCK_NATURE | SECURED BY POLYGON NETWORK</footer>
-
 <script>
-    const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev"; 
+async function envoyerProtocol() {
+    const email = document.getElementById('user-email').value;
+    const file = document.getElementById('art-upload').files[0];
+    const logs = document.getElementById('terminal-logs');
 
-    let userAccount = null;
+    if(!email.includes('@')) { alert("EMAIL REQUIS"); return; }
+    
+    logs.style.display = 'block';
+    logs.innerHTML = "> VALIDATION DU CANAL...<br>> UPLOAD EN COURS...";
 
-    async function connectMetaMask() {
-        if (window.ethereum) {
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                userAccount = accounts[0];
-                document.getElementById('wallet-address').innerText = "ADDR: " + userAccount.substring(0,6) + "..." + userAccount.substring(38);
-                document.getElementById('wallet-address').style.color = "#00ff41";
-            } catch (error) { console.error(error); }
-        } else { alert("> ERROR: METAMASK_NOT_FOUND"); }
-    }
+    const fd = new FormData();
+    fd.append('image', file);
+    fd.append('email', email);
 
-    document.getElementById('client-art').onchange = function(e) {
-        if(e.target.files[0]) {
-            const label = document.getElementById('file-name');
-            label.style.display = 'block';
-            label.innerText = "> HUMAN_ART_DETECTED: " + e.target.files[0].name;
-            document.querySelector('.service-grid').style.display = 'grid';
+    try {
+        const res = await fetch("TON_URL_CODESPACE/process_art", { method: 'POST', body: fd });
+        const data = await res.json();
+        if(data.status === "success") {
+            logs.innerHTML += "<br>> ANALYSE RÉUSSIE.<br>> CERTIFICAT ENVOYÉ À : " + email;
+        } else {
+            logs.innerHTML += "<br>> ERREUR : " + data.message;
         }
-    };
-
-    async function processPayment(type, price) {
-        if(!userAccount) { alert("> SYSTEM_HALT: CONNECT WALLET"); return; }
-        if(!confirm(`> CONFIRM TRANSACTION? \nCOST: ${price} ETH \nTYPE: ${type}`)) return;
-
-        document.querySelector('.service-grid').style.display = 'none';
-        const logs = document.getElementById('terminal-logs');
-        logs.style.display = 'block';
-        logs.innerHTML = `> INITIATING SECURE TRANSFER...<br>`;
-
-        const fileInput = document.getElementById('client-art');
-        const formData = new FormData();
-        formData.append('image', fileInput.files[0]);
-        formData.append('type', type);
-        formData.append('tx_hash', '0xSIM_' + Date.now());
-
-        try {
-            logs.innerHTML += `> CONNECTING TO 0xBN NODE...<br>`;
-            
-            const response = await fetch(SERVER_URL + "/process_art", {
-                method: 'POST',
-                body: formData
-            });
-
-            if (!response.ok) throw new Error("Server Error");
-            const result = await response.json();
-
-            // --- AFFICHAGE RÉEL DES DONNÉES DU MINAGE ---
-            logs.innerHTML += `<br><span style="color:#00f2ff">> ANALYSIS COMPLETE:</span><br>`;
-            logs.innerHTML += `> ORGANIC_SCORE: ${result.ai_data.organic_score}%<br>`;
-            logs.innerHTML += `> DETECTED_PHASE: ${result.ai_data.phase_detected}<br>`;
-            
-            if(result.blockchain_proof) {
-                logs.innerHTML += `<br><span style="color:#00ff41">> [!!!] BLOCKCHAIN_MINT_SUCCESSFUL</span><br>`;
-                logs.innerHTML += `> PROOF: ${result.blockchain_proof}<br>`;
-            }
-
-            logs.innerHTML += `<br><strong style='color:#000; background:#00ff41; padding:5px;'> >> SUCCESS: ASSET IMMORTALIZED << </strong>`;
-
-        } catch (error) {
-            logs.innerHTML += `<br><strong style='color:red'> >> ERROR: SERVER_DISCONNECTED << </strong><br>`;
-        }
-    }
+    } catch(e) { logs.innerHTML += "<br>> ÉCHEC DE CONNEXION AU SERVEUR."; }
+}
 </script>
-</body>
-</html>
