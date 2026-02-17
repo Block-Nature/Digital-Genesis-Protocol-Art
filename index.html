@@ -1,42 +1,176 @@
-<div id="business-module">
-    <div class="module-title">>> ACCÈS AU PROTOCOLE</div>
-    <p>Entrez votre email pour recevoir votre certificat d'authenticité.</p>
-    
-    <input type="email" id="user-email" placeholder="VOTRE@EMAIL.COM" 
-           style="background:#000; border:1px solid #00FF41; color:#00FF41; padding:15px; width:80%; margin:20px 0; text-align:center;">
-    
-    <br>
-    <button class="buy-btn" onclick="document.getElementById('art-upload').click()">
-        [ SÉLECTIONNER VOTRE ŒUVRE ]
-    </button>
-    <input type="file" id="art-upload" style="display:none" onchange="envoyerProtocol()">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xBLOCK_NATURE | AGENT_SOVEREIGN_GALLERY</title>
+    <style>
+        /* --- DESIGN SYSTEM : TRADING TERMINAL --- */
+        body { background-color: #050505; color: #e0e0e0; font-family: 'Courier New', monospace; margin: 0; line-height: 1.6; }
+        
+        /* Agent Master Node Bar */
+        .agent-terminal {
+            background: #000; border-bottom: 2px solid #00ff41; padding: 15px;
+            font-size: 0.9em; position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.1);
+        }
+        .terminal-header { display: flex; justify-content: space-between; align-items: center; color: #00ff41; font-weight: bold; }
+        .status-blink { animation: blinker 1s linear infinite; color: #00ff41; }
+        @keyframes blinker { 50% { opacity: 0; } }
 
-    <div id="terminal-logs" style="margin-top:20px; display:none; border:1px solid #333; padding:15px; text-align:left; color:#00FF41;"></div>
+        /* Main Layout */
+        header { padding: 60px 20px 30px 20px; text-align: center; border-bottom: 1px solid #222; }
+        h1 { color: #fff; letter-spacing: 4px; font-size: 2.2em; margin: 0; text-shadow: 0 0 10px rgba(0, 255, 65, 0.3); }
+        .subtitle { color: #00ff41; font-size: 0.85em; margin-top: 10px; text-transform: uppercase; }
+
+        .container { max-width: 900px; margin: auto; padding: 20px; }
+
+        /* --- CERTIFICATION MODULE (NOUVEAU DESIGN) --- */
+        .certification-box {
+            background: #0a0a0c; border: 1px solid #333; padding: 40px;
+            margin: 40px 0; border-radius: 4px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .certification-box::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #00ff41;
+        }
+        
+        .email-input {
+            background: #000; border: 1px solid #444; color: #00ff41;
+            padding: 15px; width: 90%; max-width: 400px; margin-bottom: 25px;
+            font-family: 'Courier New', monospace; font-size: 1.1em; text-align: center;
+        }
+        .email-input:focus { border-color: #00ff41; outline: none; }
+
+        .action-btn { 
+            background: #00ff41; color: #000; border: none; padding: 20px 40px; 
+            font-weight: bold; cursor: pointer; font-family: 'Courier New'; 
+            text-transform: uppercase; font-size: 1em; transition: 0.3s;
+        }
+        .action-btn:hover { background: #fff; box-shadow: 0 0 20px #00ff41; }
+
+        /* Terminal Logs style "Trade" */
+        #console-logs {
+            background: #000; border: 1px solid #222; padding: 15px; margin-top: 30px;
+            height: 150px; overflow-y: auto; text-align: left; font-size: 0.85em; color: #aaa;
+        }
+
+        /* Protocole des 5 Phases Display */
+        .protocol-info {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; margin-top: 40px; font-size: 0.75em; color: #666;
+        }
+        .phase-step { border: 1px solid #222; padding: 10px; text-align: center; }
+        .phase-step.active { border-color: #00ff41; color: #00ff41; }
+
+        footer { text-align: center; padding: 40px; font-size: 0.75em; color: #444; border-top: 1px solid #111; }
+    </style>
+</head>
+<body>
+
+<div class="agent-terminal">
+    <div class="terminal-header">
+        <span>> AGENT: BLOCK-NATURE [MASTER_NODE]</span>
+        <span>STATUS: <span class="status-blink">● ONLINE</span></span>
+    </div>
 </div>
 
-<script>
-async function envoyerProtocol() {
-    const email = document.getElementById('user-email').value;
-    const file = document.getElementById('art-upload').files[0];
-    const logs = document.getElementById('terminal-logs');
+<header>
+    <h1>0xBLOCK_NATURE</h1>
+    <div class="subtitle">PROTOCOL D'IMMORTALITÉ // MIKE SALADIN</div>
+</header>
 
-    if(!email.includes('@')) { alert("EMAIL REQUIS"); return; }
+<div class="container">
     
-    logs.style.display = 'block';
-    logs.innerHTML = "> VALIDATION DU CANAL...<br>> UPLOAD EN COURS...";
+    <section class="certification-box">
+        <h2 style="color: #fff; font-size: 1.2em; margin-bottom: 10px;">>> INITIATE_CERTIFICATION_SEQUENCE</h2>
+        <p style="color: #666; font-size: 0.9em; margin-bottom: 30px;">
+            Analysez votre art via le spectre <strong>CARBON-CODE</strong>.
+        </p>
 
-    const fd = new FormData();
-    fd.append('image', file);
-    fd.append('email', email);
+        <input type="email" id="user-email" class="email-input" placeholder="ENTREZ_VOTRE_EMAIL" required>
+        <br>
+        <input type="file" id="art-upload" accept="image/*" style="display: none;">
+        <button class="action-btn" onclick="startCertification()">
+            [ CERTIFIER MON ŒUVRE ]
+        </button>
 
-    try {
-        const res = await fetch("TON_URL_CODESPACE/process_art", { method: 'POST', body: fd });
-        const data = await res.json();
-        if(data.status === "success") {
-            logs.innerHTML += "<br>> ANALYSE RÉUSSIE.<br>> CERTIFICAT ENVOYÉ À : " + email;
-        } else {
-            logs.innerHTML += "<br>> ERREUR : " + data.message;
+        <div id="console-logs">
+            > Protocol v2.5 initialized...<br>
+            > Waiting for human input...
+        </div>
+    </section>
+
+    <div class="protocol-info">
+        <div class="phase-step active">01_LA_NATURE</div>
+        <div class="phase-step">02_LA_MATIÈRE</div>
+        <div class="phase-step">03_L'ÉLÉMENT</div>
+        <div class="phase-step">04_L'ÂME</div>
+        <div class="phase-step">05_L'HISTOIRE</div>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 0xBLOCK_NATURE - POWERED BY AGENT SOVEREIGNTY
+</footer>
+
+<script>
+    // METTRE À JOUR CETTE URL AVEC TON LIEN "PORTS" GITHUB CODESPACES (Port 5000)
+    const SERVER_URL = "https://probable-enigma-4j4rq4qxwrrgh7j74-5000.app.github.dev";
+
+    const logs = document.getElementById('console-logs');
+
+    function addLog(message, color = "#aaa") {
+        const time = new Date().toLocaleTimeString();
+        logs.innerHTML += `<br><span style="color: ${color}">> [${time}] ${message}</span>`;
+        logs.scrollTop = logs.scrollHeight;
+    }
+
+    function startCertification() {
+        const email = document.getElementById('user-email').value;
+        if (!email || !email.includes('@')) {
+            addLog("ERROR: INVALID_EMAIL_STRUCTURE", "#ff4141");
+            alert("VEUILLEZ ENTRER UNE ADRESSE EMAIL VALIDE");
+            return;
         }
-    } catch(e) { logs.innerHTML += "<br>> ÉCHEC DE CONNEXION AU SERVEUR."; }
-}
+        document.getElementById('art-upload').click();
+    }
+
+    document.getElementById('art-upload').onchange = async function(e) {
+        if (!e.target.files[0]) return;
+
+        const file = e.target.files[0];
+        const email = document.getElementById('user-email').value;
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('email', email);
+
+        addLog("HUMAN_ART_DETECTED: " + file.name, "#00f2ff");
+        addLog("UPLOADING TO MASTER_NODE...");
+
+        try {
+            const response = await fetch(SERVER_URL + "/process_art", {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.status === "success") {
+                addLog("ANALYSIS_COMPLETE", "#00ff41");
+                addLog("GENERATING_PREMIUM_PDF...", "#00ff41");
+                addLog("SUCCESS: CERTIFICATE_SENT_TO_MAIL", "#00ff41");
+                alert("SYSTÈME : Certificat envoyé avec succès à " + email);
+            } else {
+                addLog("CRITICAL_ERROR: " + result.message, "#ff4141");
+            }
+        } catch (error) {
+            addLog("CONNECTION_FAILED: IS_SERVER_RUNNING?", "#ff4141");
+            console.error(error);
+        }
+    };
 </script>
+
+</body>
+</html>
